@@ -1,5 +1,9 @@
 import { rawNums } from "./day1data";
 
+/*
+PART ONE
+*/
+
 // sanitizes data from rawNums into a 2D array
 // with each inner array as a pair of numbers
 const nums = rawNums
@@ -9,10 +13,14 @@ const nums = rawNums
 
 // transform each numbers in both columns to their respective
 // arrays and sort them ascendingly to return the total distance
-function sortNumbers(arr2D) {
+function findTotalDistance(arr2D) {
   const leftArr = [];
   const rightArr = [];
+  // PART ONE ANSWER
   let totalDistance = 0;
+  // PART TWO ANSWER
+  let similarityScore = 0;
+  const similarityCache = {};
 
   // populate each arr with each column's numbers
   for (let i = 0; i < arr2D.length; i++) {
@@ -26,9 +34,22 @@ function sortNumbers(arr2D) {
   // can iterate through one array, since both are of the same length
   for (let i = 0; i < leftArr.length; i++) {
     totalDistance += Math.abs(leftArr[i] - rightArr[i]);
+
+    // populate the cache to see the frequency of each # in the right array
+    similarityCache[rightArr[i]]
+      ? similarityCache[rightArr[i]]++
+      : (similarityCache[rightArr[i]] = 1);
   }
 
-  return totalDistance;
+  // determine the similarity score for each number's frequency
+  for (let i = 0; i < leftArr.length; i++) {
+    if (similarityCache[leftArr[i]]) {
+      similarityScore += leftArr[i] * similarityCache[leftArr[i]];
+    }
+  }
+
+  // return answers for both parts in an array
+  return [totalDistance, similarityScore];
 }
 
-console.log(sortNumbers(nums));
+console.log(findTotalDistance(nums));
