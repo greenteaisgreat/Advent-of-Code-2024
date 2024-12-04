@@ -9,6 +9,7 @@ const data = rawData
 function findSafeReports(arr2D) {
   let totalSafe = 0;
 
+  // nested loops because I'm a savage
   for (let i = 0; i < arr2D.length; i++) {
     let isIncreasing = false;
 
@@ -17,8 +18,12 @@ function findSafeReports(arr2D) {
       let next = arr2D[i][j + 1];
       let diff = Math.abs(first - next);
 
+      // find out if the initial two numbers are increasing or decreasing
       if (arr2D[i][0] < arr2D[i][1]) isIncreasing = true;
 
+      // logic to guage if each report is safe or not, based off
+      // the challenges paramters (strictly increasing/decreasing,
+      // each adjacent number is at least one or no more than 3 in value)
       if (isIncreasing && next) {
         if (first >= next) {
           break;
