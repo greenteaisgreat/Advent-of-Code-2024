@@ -12,6 +12,7 @@ function findSafeReports(arr2D) {
   // nested loops because I'm a savage
   for (let i = 0; i < arr2D.length; i++) {
     let isIncreasing = false;
+    let hasFault = false;
 
     for (let j = 0; j < arr2D[i].length; j++) {
       let first = arr2D[i][j];
@@ -22,18 +23,34 @@ function findSafeReports(arr2D) {
       if (arr2D[i][0] < arr2D[i][1]) isIncreasing = true;
 
       // logic to guage if each report is safe or not, based off
-      // the challenges paramters (strictly increasing/decreasing,
+      // the challenges parameters (strictly increasing/decreasing,
       // each adjacent number is at least one or no more than 3 in value)
       if (isIncreasing && next) {
         if (first >= next) {
-          break;
+          if (!hasFault) {
+            hasFault = true;
+            continue;
+          } else break;
         }
-        if (diff > 3 || diff < 1) break;
+        if (diff > 3) {
+          if (!hasFault) {
+            hasFault = true;
+            continue;
+          } else break;
+        }
       } else if (!isIncreasing && next) {
         if (first <= next) {
-          break;
+          if (!hasFault) {
+            hasFault = true;
+            continue;
+          } else break;
         }
-        if (diff > 3 || diff < 1) break;
+        if (diff > 3) {
+          if (!hasFault) {
+            hasFault = true;
+            continue;
+          } else break;
+        }
       } else totalSafe++;
     }
   }
