@@ -17,7 +17,7 @@ function findSafeReports(arr2D) {
       let next = arr2D[i][j + 1];
       let diff = Math.abs(first - next);
 
-      if (arr2D[i][0] > arr2D[i][1]) isIncreasing = true;
+      if (arr2D[i][0] < arr2D[i][1]) isIncreasing = true;
 
       if (isIncreasing && next) {
         if (first >= next) {
@@ -34,3 +34,5 @@ function findSafeReports(arr2D) {
   }
   return totalSafe;
 }
+
+console.log(findSafeReports(data));
