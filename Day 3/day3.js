@@ -14,6 +14,8 @@ const product = input
 console.log(product);
 
 // PART TWO
+// use existing regex, but adding on for "do" & "don't"
+// to determine if instructions should be considered
 const product2 = input
   .matchAll(/mul\((\d+),(\d+)\)|do\(\)|don't\(\)/g)
   .map(([match, a, b]) => (b ? +a * +b : match));
@@ -23,6 +25,7 @@ const instructions = product2.toArray();
 let active = true;
 let sum = 0;
 
+// logic to determine sum of "do" instructions
 for (const instr of instructions) {
   if (active && typeof instr == "number") sum += instr;
   if (active && instr == "don't()") active = false;
